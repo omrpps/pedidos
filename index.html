@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Pedidos</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Gestión de Pedidos</h1>
+    </header>
+
+    <!-- Formulario para agregar pedidos -->
+    <section id="formSection">
+      <h2>Agregar Pedido</h2>
+      <form id="orderForm">
+        <input type="text" id="customerName" placeholder="Nombre del Cliente" required>
+        <input type="tel" id="customerPhone" placeholder="Teléfono del Cliente" required>
+        <input type="email" id="customerEmail" placeholder="Correo Electrónico del Cliente" required>
+        <input type="text" id="productReference" placeholder="Referencia del Producto" required>
+        <textarea id="description" placeholder="Descripción del Pedido"></textarea>
+        <button type="submit">Agregar Pedido</button>
+      </form>
+    </section>
+
+    <!-- Búsqueda de pedidos -->
+    <section id="searchSection">
+      <h2>Buscar Pedidos</h2>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar pedidos...">
+        <button id="searchBtn">Buscar</button>
+      </div>
+    </section>
+
+    <!-- Listado de pedidos -->
+    <section id="ordersSection">
+      <h2>Listado de Pedidos</h2>
+      <table id="ordersTable">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Correo Electrónico</th>
+            <th>Referencia</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Gráficas -->
+    <section id="chartSection" style="display: none;">
+      <h2>Productos Más Pedidos</h2>
+      <canvas id="ordersChart"></canvas>
+    </section>
+
+    <button id="showChartBtn">Mostrar Gráficas</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

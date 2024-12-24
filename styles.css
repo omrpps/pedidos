@@ -1,0 +1,130 @@
+/* Estilo general */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+/* Contenedor */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Encabezado */
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: #35424a;
+  color: white;
+  border-radius: 8px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form input, form textarea, form button {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form button {
+  background-color: #35424a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #2c3b42;
+}
+
+/* Búsqueda */
+.search-container {
+  display: flex;
+  gap: 10px;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#searchBtn {
+  background-color: #e8491d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#searchBtn:hover {
+  background-color: #cf3c14;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #f4f4f9;
+}
+
+.actions button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.delete {
+  background-color: #e8491d;
+  color: white;
+  border: none;
+}
+
+.delete:hover {
+  background-color: #cf3c14;
+}
+
+.generate-pdf {
+  background-color: #35424a;
+  color: white;
+  border: none;
+}
+
+.generate-pdf:hover {
+  background-color: #2c3b42;
+}
