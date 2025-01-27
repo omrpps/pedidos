@@ -8,7 +8,7 @@ Una aplicación web ligera y funcional para gestionar pedidos de forma local. Di
 - **Búsqueda Inteligente**: Filtra pedidos por cualquier campo, ya sea en tiempo real o mediante un botón.
 - **Exportación de Pedidos**: Genera notas en formato PDF con los detalles del pedido para compartir o archivar.
 - **Visualización de Datos**: Gráficas interactivas que muestran los productos más solicitados.
-- **Persistencia de Datos**: Utiliza `localStorage` para mantener los pedidos incluso al recargar la página.
+- **Persistencia de Datos**: Utiliza `localStorage` para mantener los pedidos incluso al recargar la página. Exportación / Importación 
 - **Diseño Moderno**: Interfaz limpia, responsiva y fácil de usar.
 
 ## 🛠️ Tecnologías Utilizadas
