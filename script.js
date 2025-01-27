@@ -1,5 +1,3 @@
-/// script.js
-
 // Selección de elementos del DOM
 const form = document.getElementById('orderForm');
 const ordersTableBody = document.querySelector('#ordersTable tbody');
@@ -25,6 +23,7 @@ form.addEventListener('submit', (e) => {
   const customerEmail = document.getElementById('customerEmail').value;
   const productReference = document.getElementById('productReference').value;
   const description = document.getElementById('description').value;
+  const priority = document.getElementById('priority').value;
 
   // Crear un nuevo pedido
   const newOrder = {
@@ -33,7 +32,10 @@ form.addEventListener('submit', (e) => {
     customerEmail,
     productReference,
     description,
-    date: new Date().toLocaleString()
+    priority,
+    status: 'pendiente', // Estado inicial
+    date: new Date().toLocaleString(),
+    id: Date.now().toString() // ID único
   };
 
   // Agregar el nuevo pedido a la lista y guardar en localStorage
@@ -57,14 +59,16 @@ function renderOrders(ordersToRender) {
   ordersToRender.forEach((order, index) => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${order.customerName}</td>
-      <td>${order.customerPhone}</td>
-      <td>${order.customerEmail}</td>
-      <td>${order.productReference}</td>
-      <td>${order.description}</td>
-      <td class="actions">
-        <button class="delete" onclick="deleteOrder(${index})">Eliminar</button>
-        <button class="generate-pdf" onclick="generatePDF(${index})">Generar Nota</button>
+      <td data-label="Prioridad"><span class="priority ${order.priority}">${order.priority}</span></td>
+      <td data-label="Estado"><span class="status ${order.status}" onclick="toggleStatus(${index})">${order.status}</span></td>
+      <td data-label="Cliente">${order.customerName}</td>
+      <td data-label="Teléfono">${order.customerPhone}</td>
+      <td data-label="Correo">${order.customerEmail}</td>
+      <td data-label="Referencia">${order.productReference}</td>
+      <td data-label="Descripción">${order.description}</td>
+      <td class="actions" data-label="Acciones">
+        <button class="delete" onclick="deleteOrder(${index})">🗑️</button>
+        <button class="generate-pdf" onclick="generatePDF(${index})">📄</button>
       </td>
     `;
     ordersTableBody.appendChild(row);
@@ -79,6 +83,15 @@ function deleteOrder(index) {
     renderOrders(orders);
     alert('Pedido eliminado con éxito.');
   }
+}
+
+// Cambiar estado de un pedido
+function toggleStatus(index) {
+  const statuses = ['pendiente', 'en-proceso', 'completado'];
+  const currentIndex = statuses.indexOf(orders[index].status);
+  orders[index].status = statuses[(currentIndex + 1) % 3]; // Cambiar al siguiente estado
+  localStorage.setItem('orders', JSON.stringify(orders));
+  renderOrders(orders);
 }
 
 // Filtrar pedidos según la búsqueda
@@ -165,8 +178,54 @@ function generatePDF(index) {
   doc.text(`Teléfono: ${order.customerPhone}`, 20, 50);
   doc.text(`Correo Electrónico: ${order.customerEmail}`, 20, 60);
   doc.text(`Referencia del Producto: ${order.productReference}`, 20, 70);
-  doc.text('Descripción:', 20, 80);
-  doc.text(order.description, 20, 90, { maxWidth: 170 });
+  doc.text(`Prioridad: ${order.priority}`, 20, 80);
+  doc.text(`Estado: ${order.status}`, 20, 90);
+  doc.text('Descripción:', 20, 100);
+  doc.text(order.description, 20, 110, { maxWidth: 170 });
 
   doc.save(`Pedido_${order.customerName.replace(/\s+/g, '_')}.pdf`);
+}
+
+// Exportar datos a JSON
+function exportData() {
+  const dataStr = JSON.stringify(orders);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `pedidos_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Importar datos desde JSON
+document.getElementById('importFile').addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) throw new Error();
+
+      if (confirm(`¿Importar ${imported.length} pedidos? Se perderán los datos actuales.`)) {
+        orders = imported;
+        localStorage.setItem('orders', JSON.stringify(orders));
+        renderOrders(orders);
+        alert('Pedidos importados con éxito.');
+      }
+    } catch {
+      alert('Error: Archivo no válido');
+    }
+  };
+  reader.readAsText(file);
+});
+
+// Scroll para menú móvil
+function scrollToSection(sectionId) {
+  document.getElementById(sectionId).scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
 }

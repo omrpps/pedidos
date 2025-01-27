@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>Gestión de Pedidos</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -14,6 +14,15 @@
       <h1>Gestión de Pedidos</h1>
     </header>
 
+    <!-- Botones de Importar/Exportar -->
+    <div class="data-actions">
+      <button onclick="exportData()">📤 Exportar</button>
+      <label class="import-btn">
+        📥 Importar
+        <input type="file" id="importFile" hidden accept=".json">
+      </label>
+    </div>
+
     <!-- Formulario para agregar pedidos -->
     <section id="formSection">
       <h2>Agregar Pedido</h2>
@@ -23,6 +32,14 @@
         <input type="email" id="customerEmail" placeholder="Correo Electrónico del Cliente" required>
         <input type="text" id="productReference" placeholder="Referencia del Producto" required>
         <textarea id="description" placeholder="Descripción del Pedido"></textarea>
+        <div class="form-group">
+          <label>Prioridad:</label>
+          <select id="priority" required>
+            <option value="baja">Baja</option>
+            <option value="media">Media</option>
+            <option value="alta">Alta</option>
+          </select>
+        </div>
         <button type="submit">Agregar Pedido</button>
       </form>
     </section>
@@ -42,9 +59,11 @@
       <table id="ordersTable">
         <thead>
           <tr>
+            <th>Prioridad</th>
+            <th>Estado</th>
             <th>Cliente</th>
             <th>Teléfono</th>
-            <th>Correo Electrónico</th>
+            <th>Correo</th>
             <th>Referencia</th>
             <th>Descripción</th>
             <th>Acciones</th>
@@ -62,6 +81,13 @@
 
     <button id="showChartBtn">Mostrar Gráficas</button>
   </div>
+
+  <!-- Menú Móvil -->
+  <div class="mobile-bottom-bar">
+    <button onclick="scrollToSection('formSection')">➕ Nuevo</button>
+    <button onclick="scrollToSection('ordersSection')">📋 Lista</button>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
